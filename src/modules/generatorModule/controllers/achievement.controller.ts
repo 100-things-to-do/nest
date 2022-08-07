@@ -23,75 +23,53 @@ export class AchievementController {
 
   @Post()
   async createAchievement(
-    @Res() response,
     @Body() achievementDto: Achievement,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
   ) {
-    const newAchievement =
-      await this.achievementService.addAchievementToActivity(
-        topicId,
-        categoryId,
-        activityId,
-        achievementDto,
-      );
-    return response.status(HttpStatus.CREATED).json({
-      newAchievement,
-    });
+    return this.achievementService.addAchievementToActivity(
+      topicId,
+      categoryId,
+      activityId,
+      achievementDto,
+    );
   }
 
   @Get()
   async getAchievement(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
   ) {
-    const achievement = await this.achievementService.getAchievement(
+    return this.achievementService.getAchievement(
       topicId,
       categoryId,
       activityId,
     );
-    console.log(achievement);
-    return response.status(HttpStatus.OK).json({
-      achievement,
-    });
   }
 
   @Put()
   async update(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
     @Body() achievement: Achievement,
   ) {
-    const updatedActivity = await this.achievementService.update(
+    return this.achievementService.update(
       topicId,
       categoryId,
       activityId,
       achievement,
     );
-    return response.status(HttpStatus.OK).json({
-      updatedActivity,
-    });
   }
 
   @Delete()
   async delete(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
   ) {
-    const deletedActivity = await this.achievementService.delete(
-      topicId,
-      categoryId,
-      activityId,
-    );
-    return response.status(HttpStatus.OK).json({
-      deletedActivity,
-    });
+    return this.achievementService.delete(topicId, categoryId, activityId);
   }
 }

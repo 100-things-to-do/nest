@@ -20,20 +20,19 @@ export class TopicService {
   }
 
   async findAll(): Promise<Topic[]> {
-    return await this.topicModel.find().exec();
+    return this.topicModel.find().exec();
   }
 
   async update(id, newTopic: Topic): Promise<Topic> {
     await this.topicModel.updateOne({ _id: id }, newTopic);
-
-    return await this.topicModel.findOne({ _id: id });
+    return this.topicModel.findOne({ _id: id });
   }
 
   async delete(id): Promise<any> {
-    return await this.topicModel.findByIdAndRemove(id);
+    return this.topicModel.findByIdAndRemove(id);
   }
 
   async getTopic(id): Promise<Topic> {
-    return await this.topicModel.findOne({ _id: id }).exec();
+    return this.topicModel.findOne({ _id: id }).exec();
   }
 }

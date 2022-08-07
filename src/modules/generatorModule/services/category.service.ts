@@ -23,7 +23,6 @@ export class CategoryService {
   }
 
   async addCategoryToTopic(topicId, categoryDto: CategoryDto): Promise<Topic> {
-    console.log(categoryDto);
     return this.topicModel.findOneAndUpdate(
       { _id: topicId },
       { $push: { categories: categoryDto } },
@@ -43,7 +42,7 @@ export class CategoryService {
         ],
       },
     );
-    return await this.topicModel.findOne({ _id: topicId });
+    return this.topicModel.findOne({ _id: topicId });
   }
 
   async delete(topicId, categoryId): Promise<Topic> {
@@ -51,10 +50,10 @@ export class CategoryService {
       { _id: topicId },
       { $pull: { categories: { _id: categoryId } } },
     );
-    return await this.topicModel.findOne({ _id: topicId });
+    return this.topicModel.findOne({ _id: topicId });
   }
 
-  async getGategory(topicId, categoryId): Promise<Category> {
+  async getCategory(topicId, categoryId): Promise<Category> {
     const topic: Topic = await this.topicModel.findOne({ _id: topicId }).exec();
     if (topic) {
       let foundedCategory = null;

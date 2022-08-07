@@ -75,24 +75,27 @@ export class AchievementService {
     activityId,
     newAchievement: Achievement,
   ): Promise<Topic> {
-    await this.topicModel.updateOne(
-      {
-        _id: topicId,
-      },
-      {
-        $set: { 'categories.$[i].activities.$[j].achievement': newAchievement },
-      },
-      {
-        arrayFilters: [
-          {
-            'i._id': categoryId,
+    return this.topicModel
+      .updateOne(
+        {
+          _id: topicId,
+        },
+        {
+          $set: {
+            'categories.$[i].activities.$[j].achievement': newAchievement,
           },
-          { 'j._id': activityId },
-        ],
-      },
-    );
-
-    return await this.topicModel.findOne({ _id: topicId });
+        },
+        {
+          arrayFilters: [
+            {
+              'i._id': categoryId,
+            },
+            { 'j._id': activityId },
+          ],
+          new: true,
+        },
+      )
+      .lean();
   }
 
   async delete(topicId, categoryId, activityId): Promise<Topic> {

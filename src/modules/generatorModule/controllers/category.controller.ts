@@ -20,72 +20,40 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
-  async findAll(@Res() response, @Param('topicId') topicId: string) {
-    const categories = await this.categoryService.findAll(topicId);
-    return response.status(HttpStatus.OK).json({
-      categories,
-    });
+  async findAll(@Param('topicId') topicId: string) {
+    return this.categoryService.findAll(topicId);
   }
 
   @Post()
   async createCategory(
-    @Res() response,
     @Body() categoryDto: CategoryDto,
     @Param('topicId') topicId: string,
   ) {
-    const newCategory = await this.categoryService.addCategoryToTopic(
-      topicId,
-      categoryDto,
-    );
-    return response.status(HttpStatus.CREATED).json({
-      newCategory,
-    });
+    return this.categoryService.addCategoryToTopic(topicId, categoryDto);
   }
 
   @Get('/:categoryId')
   async getCategory(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    const category = await this.categoryService.getGategory(
-      topicId,
-      categoryId,
-    );
-    return response.status(HttpStatus.OK).json({
-      category,
-    });
+    return this.categoryService.getCategory(topicId, categoryId);
   }
 
   @Put('/:categoryId')
   async update(
-    @Res() response,
     @Body() categoryDto: Category,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    const updatedCategory = await this.categoryService.update(
-      topicId,
-      categoryId,
-      categoryDto,
-    );
-    return response.status(HttpStatus.OK).json({
-      updatedCategory,
-    });
+    return this.categoryService.update(topicId, categoryId, categoryDto);
   }
 
   @Delete('/:categoryId')
   async delete(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    const deletedCategory = await this.categoryService.delete(
-      topicId,
-      categoryId,
-    );
-    return response.status(HttpStatus.OK).json({
-      deletedCategory,
-    });
+    return this.categoryService.delete(topicId, categoryId);
   }
 }

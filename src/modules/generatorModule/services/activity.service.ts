@@ -42,7 +42,7 @@ export class ActivityService {
     images: any, //Express.Multer.File[]
   ): Promise<Topic> {
     activityDto.image = this.getImage(images);
-    const updateResult = await this.topicModel.findOneAndUpdate(
+    return this.topicModel.findOneAndUpdate(
       { _id: topicId },
       { $push: { 'categories.$[i].activities': activityDto } },
       {
@@ -54,7 +54,6 @@ export class ActivityService {
         new: true,
       },
     );
-    return this.topicModel.findOne({ _id: topicId }).exec();
   }
 
   async getActivity(topicId, categoryId, activityId): Promise<Activity> {
@@ -88,7 +87,6 @@ export class ActivityService {
     activityId,
     newActivity: Activity,
   ): Promise<Topic> {
-    console.log(newActivity);
     const setQueryObject = this.helper.getUpdatedFieldsQuery(
       newActivity,
       'categories.$[i].activities.$[j]',
@@ -109,7 +107,7 @@ export class ActivityService {
       },
     );
 
-    return await this.topicModel.findOne({ _id: topicId });
+    return this.topicModel.findOne({ _id: topicId });
   }
 
   async delete(topicId, categoryId, activityId): Promise<Topic> {
@@ -124,7 +122,7 @@ export class ActivityService {
         ],
       },
     );
-    return await this.topicModel.findOne({ _id: topicId });
+    return this.topicModel.findOne({ _id: topicId });
   }
 
   //Express.Multer.File[]

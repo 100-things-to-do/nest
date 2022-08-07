@@ -29,86 +29,58 @@ export class ActivityController {
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FilesInterceptor('image', null, multerOptions))
   async createActivity(
-    @Res() response,
     @UploadedFiles() image,
     @Body() activityDto: ActivityDto,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    const newActivity = await this.activityService.addActivityToCategory(
+    return this.activityService.addActivityToCategory(
       topicId,
       categoryId,
       activityDto,
       image,
     );
-    return response.status(HttpStatus.CREATED).json({
-      newActivity,
-    });
   }
 
   @Get('/:activityId')
   async getCategory(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
   ) {
-    const category = await this.activityService.getActivity(
-      topicId,
-      categoryId,
-      activityId,
-    );
-    return response.status(HttpStatus.OK).json({
-      category,
-    });
+    return this.activityService.getActivity(topicId, categoryId, activityId);
   }
 
   @Get()
   async findAll(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    const activities = await this.activityService.findAll(topicId, categoryId);
-    return response.status(HttpStatus.OK).json({
-      activities,
-    });
+    return this.activityService.findAll(topicId, categoryId);
   }
 
   @Put('/:activityId')
   @UseInterceptors(FileInterceptor('file'))
   async update(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
     @Body() activity: Activity,
   ) {
-    const updatedActivity = await this.activityService.update(
+    return this.activityService.update(
       topicId,
       categoryId,
       activityId,
       activity,
     );
-    return response.status(HttpStatus.OK).json({
-      updatedActivity,
-    });
   }
 
   @Delete('/:activityId')
   async delete(
-    @Res() response,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
   ) {
-    const deletedActivity = await this.activityService.delete(
-      topicId,
-      categoryId,
-      activityId,
-    );
-    return response.status(HttpStatus.OK).json({
-      deletedActivity,
-    });
+    return this.activityService.delete(topicId, categoryId, activityId);
   }
 }
