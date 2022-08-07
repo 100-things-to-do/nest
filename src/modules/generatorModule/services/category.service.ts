@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category } from '../../../schemas/category.schema';
-import { Topic } from '../../../schemas/topic.schema';
+import { Topic, TopicDocument } from '../../../schemas/topic.schema';
+import CategoryDto from '../../../dtos/CategoryDto';
 
 @Injectable()
 export class CategoryService {
   constructor(
     @InjectModel(Topic.name)
-    private topicModel: Model<Topic>,
+    private topicModel: Model<TopicDocument>,
   ) {}
 
   async findAll(topicId): Promise<Category[]> {
@@ -21,10 +22,8 @@ export class CategoryService {
     }
   }
 
-  async addCategoryToTopic(
-    topicId: number,
-    categoryDto: Category,
-  ): Promise<Topic> {
+  async addCategoryToTopic(topicId, categoryDto: CategoryDto): Promise<Topic> {
+    console.log(categoryDto);
     return this.topicModel.findOneAndUpdate(
       { _id: topicId },
       { $push: { categories: categoryDto } },

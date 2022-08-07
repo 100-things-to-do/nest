@@ -11,12 +11,16 @@ import {
 } from '@nestjs/common';
 import { TopicService } from 'src/modules/generatorModule/services/topic.service';
 import { Topic } from '../../../schemas/topic.schema';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import TopicDto from '../../../dtos/TopicDto';
+
+@ApiTags('topics')
 @Controller('topics')
 export class TopicController {
   constructor(private readonly topicService: TopicService) {}
 
   @Post()
-  async createTopic(@Res() response, @Body() topicDto: Topic) {
+  async createTopic(@Res() response, @Body() topicDto: TopicDto) {
     const newTopic = await this.topicService.create(topicDto);
     return response.status(HttpStatus.CREATED).json({
       newTopic,
@@ -24,7 +28,7 @@ export class TopicController {
   }
 
   @Get('/:id')
-  async getTopic(@Res() response, @Param('id') id) {
+  async getTopic(@Res() response, @Param('id') id: string) {
     const topic = await this.topicService.getTopic(id);
     return response.status(HttpStatus.OK).json({
       topic,
@@ -40,7 +44,7 @@ export class TopicController {
   }
 
   @Put('/:id')
-  async update(@Res() response, @Param('id') id, @Body() topic: Topic) {
+  async update(@Res() response, @Param('id') id: string, @Body() topic: Topic) {
     const updatedTopic = await this.topicService.update(id, topic);
     return response.status(HttpStatus.OK).json({
       updatedTopic,
@@ -48,7 +52,7 @@ export class TopicController {
   }
 
   @Delete('/:id')
-  async delete(@Res() response, @Param('id') id) {
+  async delete(@Res() response, @Param('id') id: string) {
     const deletedTopic = await this.topicService.delete(id);
     return response.status(HttpStatus.OK).json({
       deletedTopic,

@@ -2,16 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, Model } from 'mongoose';
 import { Activity } from '../../../schemas/activity.schema';
-import { Topic } from '../../../schemas/topic.schema';
+import { Topic, TopicDocument } from '../../../schemas/topic.schema';
 import { Category } from '../../../schemas/category.schema';
 import { AchievementService } from './achievement.service';
 import { Helper } from '../helpers/helper';
+import ActivityDto from '../../../dtos/ActivityDto';
+import { Express } from 'express';
+import { Achievement } from '../../../schemas/achievement.schema';
 
 @Injectable()
 export class ActivityService {
   constructor(
     @InjectModel(Topic.name)
-    private topicModel: Model<Topic>,
+    private topicModel: Model<TopicDocument>,
     private readonly helper: Helper,
   ) {}
 
@@ -20,7 +23,7 @@ export class ActivityService {
     if (topic) {
       const categories: Category[] = topic.categories;
       const filteredCategories = categories.filter(
-        (category) => category.id == categoryId,
+        (category) => category._id == categoryId,
       );
       if (filteredCategories) {
         return filteredCategories[0].activities;
@@ -33,11 +36,13 @@ export class ActivityService {
   }
 
   async addActivityToCategory(
-    topicId: number,
-    categoryId: number,
-    activityDto: Activity,
+    topicId,
+    categoryId,
+    activityDto: ActivityDto,
+    images: any, //Express.Multer.File[]
   ): Promise<Topic> {
-    return this.topicModel.findOneAndUpdate(
+    activityDto.image = this.getImage(images);
+    const updateResult = await this.topicModel.findOneAndUpdate(
       { _id: topicId },
       { $push: { 'categories.$[i].activities': activityDto } },
       {
@@ -49,6 +54,7 @@ export class ActivityService {
         new: true,
       },
     );
+    return this.topicModel.findOne({ _id: topicId }).exec();
   }
 
   async getActivity(topicId, categoryId, activityId): Promise<Activity> {
@@ -119,5 +125,14 @@ export class ActivityService {
       },
     );
     return await this.topicModel.findOne({ _id: topicId });
+  }
+
+  //Express.Multer.File[]
+  getImage(images: any): string {
+    if (images && images.length > 0) {
+      return images[0].filename;
+    } else {
+      return null;
+    }
   }
 }

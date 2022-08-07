@@ -5,7 +5,7 @@ import { Document, Model } from 'mongoose';
 
 @Injectable()
 export class Helper {
-  getUpdatedFieldsQuery(document: Document, parentObject): any {
+  getUpdatedFieldsQuery(document: any, parentObject): any {
     const queryObj = {};
     const obj = Object.entries(document);
     for (const entry of obj) {

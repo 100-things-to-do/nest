@@ -14,11 +14,11 @@ $ npm install
 
 ## Running the app
 
-```bash
-# development
-$ npm run start
 
-# watch mode
+```bash
+brew services start mongodb-community
+
+# development
 $ npm run start:dev
 
 # production mode

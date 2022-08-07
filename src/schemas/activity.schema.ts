@@ -1,9 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { AchievementSchema, Achievement } from './achievement.schema';
+import ObjectId = mongoose.Schema.Types.ObjectId;
+
+export type ActivityDocument = Activity & Document;
 
 @Schema()
-export class Activity extends Document {
+export class Activity {
+  _id?: ObjectId;
+
   @Prop()
   name: string;
 

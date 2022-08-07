@@ -12,7 +12,9 @@ import {
 import { Activity } from '../../../schemas/activity.schema';
 import { Achievement } from '../../../schemas/achievement.schema';
 import { AchievementService } from '../services/achievement.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('achievements')
 @Controller(
   'topics/:topicId/categories/:categoryId/activities/:activityId/achievements',
 )
@@ -23,9 +25,9 @@ export class AchievementController {
   async createAchievement(
     @Res() response,
     @Body() achievementDto: Achievement,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
-    @Param('activityId') activityId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
+    @Param('activityId') activityId: string,
   ) {
     const newAchievement =
       await this.achievementService.addAchievementToActivity(
@@ -42,9 +44,9 @@ export class AchievementController {
   @Get()
   async getAchievement(
     @Res() response,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
-    @Param('activityId') activityId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
+    @Param('activityId') activityId: string,
   ) {
     const achievement = await this.achievementService.getAchievement(
       topicId,
@@ -60,9 +62,9 @@ export class AchievementController {
   @Put()
   async update(
     @Res() response,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
-    @Param('activityId') activityId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
+    @Param('activityId') activityId: string,
     @Body() achievement: Achievement,
   ) {
     const updatedActivity = await this.achievementService.update(
@@ -79,9 +81,9 @@ export class AchievementController {
   @Delete()
   async delete(
     @Res() response,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
-    @Param('activityId') activityId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
+    @Param('activityId') activityId: string,
   ) {
     const deletedActivity = await this.achievementService.delete(
       topicId,

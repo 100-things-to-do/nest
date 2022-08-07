@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Activity } from '../../../schemas/activity.schema';
-import { Topic } from '../../../schemas/topic.schema';
+import { Topic, TopicDocument } from '../../../schemas/topic.schema';
 import { Category } from '../../../schemas/category.schema';
 import { Achievement } from '../../../schemas/achievement.schema';
 
@@ -10,13 +10,13 @@ import { Achievement } from '../../../schemas/achievement.schema';
 export class AchievementService {
   constructor(
     @InjectModel(Topic.name)
-    private topicModel: Model<Topic>,
+    private topicModel: Model<TopicDocument>,
   ) {}
 
   async addAchievementToActivity(
-    topicId: number,
-    categoryId: number,
-    activityId: number,
+    topicId,
+    categoryId,
+    activityId,
     achievementDto: Achievement,
   ): Promise<Topic> {
     return this.topicModel.findOneAndUpdate(

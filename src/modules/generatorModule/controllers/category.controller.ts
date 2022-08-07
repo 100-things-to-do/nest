@@ -11,13 +11,16 @@ import {
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../../../schemas/category.schema';
+import { ApiTags } from '@nestjs/swagger';
+import CategoryDto from '../../../dtos/CategoryDto';
 
+@ApiTags('categories')
 @Controller('topics/:topicId/categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Get()
-  async findAll(@Res() response, @Param('topicId') topicId) {
+  async findAll(@Res() response, @Param('topicId') topicId: string) {
     const categories = await this.categoryService.findAll(topicId);
     return response.status(HttpStatus.OK).json({
       categories,
@@ -27,8 +30,8 @@ export class CategoryController {
   @Post()
   async createCategory(
     @Res() response,
-    @Body() categoryDto: Category,
-    @Param('topicId') topicId,
+    @Body() categoryDto: CategoryDto,
+    @Param('topicId') topicId: string,
   ) {
     const newCategory = await this.categoryService.addCategoryToTopic(
       topicId,
@@ -42,8 +45,8 @@ export class CategoryController {
   @Get('/:categoryId')
   async getCategory(
     @Res() response,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
   ) {
     const category = await this.categoryService.getGategory(
       topicId,
@@ -58,8 +61,8 @@ export class CategoryController {
   async update(
     @Res() response,
     @Body() categoryDto: Category,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
   ) {
     const updatedCategory = await this.categoryService.update(
       topicId,
@@ -74,8 +77,8 @@ export class CategoryController {
   @Delete('/:categoryId')
   async delete(
     @Res() response,
-    @Param('topicId') topicId,
-    @Param('categoryId') categoryId,
+    @Param('topicId') topicId: string,
+    @Param('categoryId') categoryId: string,
   ) {
     const deletedCategory = await this.categoryService.delete(
       topicId,

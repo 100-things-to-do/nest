@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Topic } from '../../../schemas/topic.schema';
+import { Topic, TopicDocument } from '../../../schemas/topic.schema';
+import TopicDto from '../../../dtos/TopicDto';
 
 @Injectable()
 export class TopicService {
   constructor(
     @InjectModel(Topic.name)
-    private topicModel: Model<Topic>,
+    private topicModel: Model<TopicDocument>,
   ) {}
 
-  async create(topicDto: Topic): Promise<Topic> {
-    const newTopic = new this.topicModel(topicDto);
-    return newTopic.save();
+  async create(topicDto: TopicDto): Promise<Topic> {
+    const newTopic: Topic = {
+      name: topicDto.name,
+    };
+    const newTopicModel = new this.topicModel(newTopic);
+    return newTopicModel.save();
   }
 
   async findAll(): Promise<Topic[]> {

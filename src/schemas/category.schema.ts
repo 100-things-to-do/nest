@@ -1,9 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Activity, ActivitySchema } from './activity.schema';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { ApiProperty } from '@nestjs/swagger';
+import ObjectId = mongoose.Schema.Types.ObjectId;
+
+export type CategoryDocument = Category & Document;
 
 @Schema()
-export class Category extends Document {
+export class Category {
+  _id?: ObjectId;
+
   @Prop()
   name: string;
 
