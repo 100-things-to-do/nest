@@ -12,9 +12,6 @@ export const multerConfig = {
 // Multer upload options
 export const multerOptions = {
   // Enable file size limits
-  limits: {
-    fileSize: +process.env.MAX_FILE_SIZE,
-  },
   // Check the mimetypes to allow for upload
   fileFilter: (req: any, file: any, cb: any) => {
     if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
