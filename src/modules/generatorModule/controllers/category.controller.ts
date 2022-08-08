@@ -8,11 +8,15 @@ import {
   Post,
   Put,
   Res,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../../../schemas/category.schema';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import CategoryDto from '../../../dtos/CategoryDto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from '../../../config/multer';
 
 @ApiTags('categories')
 @Controller('topics/:topicId/categories')
@@ -25,11 +29,14 @@ export class CategoryController {
   }
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('image', null, multerOptions))
   async createCategory(
+    @UploadedFiles() image,
     @Body() categoryDto: CategoryDto,
     @Param('topicId') topicId: string,
   ) {
-    return this.categoryService.addCategoryToTopic(topicId, categoryDto);
+    return this.categoryService.addCategoryToTopic(image, topicId, categoryDto);
   }
 
   @Get('/:categoryId')

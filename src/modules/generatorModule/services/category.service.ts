@@ -22,7 +22,12 @@ export class CategoryService {
     }
   }
 
-  async addCategoryToTopic(topicId, categoryDto: CategoryDto): Promise<Topic> {
+  async addCategoryToTopic(
+    images,
+    topicId,
+    categoryDto: CategoryDto,
+  ): Promise<Topic> {
+    categoryDto.image = this.getImage(images);
     return this.topicModel.findOneAndUpdate(
       { _id: topicId },
       { $push: { categories: categoryDto } },
@@ -64,6 +69,14 @@ export class CategoryService {
         }
       }
       return foundedCategory;
+    } else {
+      return null;
+    }
+  }
+
+  getImage(images: any): string {
+    if (images && images.length > 0) {
+      return images[0].filename;
     } else {
       return null;
     }
