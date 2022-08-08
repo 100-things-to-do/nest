@@ -17,6 +17,9 @@ export class Activity {
 
   @Prop({ type: AchievementSchema })
   achievement: Achievement;
+
+  @Prop({ default: false })
+  isRevealed: boolean;
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);
