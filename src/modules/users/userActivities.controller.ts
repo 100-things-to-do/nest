@@ -1,6 +1,8 @@
 import { Controller, Get, Param, Post } from '@nestjs/common';
 import { UserActivitiesService } from './userActivities.service';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('UserActivities')
 @Controller(
   'users/:userDeviceId/topics/:topicId/categories/:categoryId/activities',
 )
