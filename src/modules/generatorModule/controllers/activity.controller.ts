@@ -52,11 +52,11 @@ export class ActivityController {
   }
 
   @Get()
-  async findAll(
+  async getActivities(
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    return this.activityService.findAll(topicId, categoryId);
+    return this.activityService.getActivities(topicId, categoryId);
   }
 
   @Put('/:activityId')

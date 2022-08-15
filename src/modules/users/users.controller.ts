@@ -31,16 +31,12 @@ export class UsersController {
   }
 
   @Get(':userDeviceId/topics/:topicId/categories/:categoryId/activities')
-  async getRevealedActivitiesOfCategory(
+  async getActivities(
     @Param('userDeviceId') userDeviceId: string,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    return this.userService.getRevealedActivitiesOfCategory(
-      userDeviceId,
-      topicId,
-      categoryId,
-    );
+    return this.userService.getActivities(userDeviceId, topicId, categoryId);
   }
 
   @Get()

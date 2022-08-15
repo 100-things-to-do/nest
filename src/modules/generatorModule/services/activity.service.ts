@@ -18,21 +18,18 @@ export class ActivityService {
     private readonly helper: Helper,
   ) {}
 
-  async findAll(topicId, categoryId): Promise<Activity[]> {
+  async getActivities(topicId, categoryId): Promise<Activity[]> {
     const topic: Topic = await this.topicModel.findOne({ _id: topicId }).exec();
-    if (topic) {
-      const categories: Category[] = topic.categories;
-      const filteredCategories = categories.filter(
-        (category) => category._id == categoryId,
-      );
-      if (filteredCategories) {
-        return filteredCategories[0].activities;
-      } else {
-        return <Activity[]>[];
-      }
-    } else {
+    if (!topic) {
       return <Activity[]>[];
     }
+    let activities = <Activity[]>[];
+    for (const category of topic.categories) {
+      if (String(category._id) === categoryId) {
+        activities = category.activities;
+      }
+    }
+    return activities;
   }
 
   async addActivityToCategory(

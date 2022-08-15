@@ -24,7 +24,6 @@ import { UsersModule } from '../users/users.module';
     }),
     MongooseModule.forRoot(process.env.DATABASE_URI),
     MongooseModule.forFeature([{ name: Topic.name, schema: TopicSchema }]),
-    UsersModule,
   ],
   controllers: [
     TopicController,
@@ -39,5 +38,6 @@ import { UsersModule } from '../users/users.module';
     AchievementService,
     Helper,
   ],
+  exports: [ActivityService],
 })
 export class GeneratorModule {}

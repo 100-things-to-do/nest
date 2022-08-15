@@ -2,12 +2,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { UserDocument, User } from './schemas/user.schema';
+import { ActivityService } from '../generatorModule/services/activity.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
+    private readonly activityService: ActivityService,
   ) {}
 
   async createNewDeviceRecord(userDeviceId: string) {
@@ -54,13 +56,35 @@ export class UsersService {
     );
   }
 
-  async getRevealedActivitiesOfCategory(
-    userDeviceId: string,
+  async getActivities(deviceId: string, topicId: string, categoryId: string) {
+    const activities = await this.activityService.getActivities(
+      topicId,
+      categoryId,
+    );
+    const revealedActivities = await this.getRevealedActivities(
+      deviceId,
+      topicId,
+      categoryId,
+    );
+    for (const activity of activities) {
+      const isActivityRevealed =
+        revealedActivities.filter(
+          (revealedActivity) => revealedActivity._id == activity._id,
+        ).length == 1;
+      if (isActivityRevealed) {
+        activity.isRevealed = true;
+      }
+    }
+    return activities;
+  }
+
+  async getRevealedActivities(
+    deviceId: string,
     topicId: string,
     categoryId: string,
   ) {
     const userDocument: User = await this.userModel
-      .findOne({ userDeviceId: userDeviceId })
+      .findOne({ userDeviceId: deviceId })
       .lean();
     let revealedActivitiesOfCategory = [];
     for (const topic of userDocument.topics) {
@@ -162,8 +186,6 @@ export class UsersService {
     );
     return result;
   }
-
-  async getRevealedActivities(id: string) {}
 
   //TODO: delete it later, testing endpoint.
   async getUsers() {
