@@ -5,6 +5,8 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { User, UserSchema } from './schemas/user.schema';
 import { GeneratorModule } from '../generatorModule/generator.module';
+import { UserActivitiesController } from './userActivities.controller';
+import { UserActivitiesService } from './userActivities.service';
 
 @Module({
   imports: [
@@ -16,8 +18,7 @@ import { GeneratorModule } from '../generatorModule/generator.module';
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     GeneratorModule,
   ],
-  controllers: [UsersController],
-  providers: [UsersService],
-  exports: [UsersService],
+  controllers: [UsersController, UserActivitiesController],
+  providers: [UsersService, UserActivitiesService],
 })
 export class UsersModule {}
