@@ -221,7 +221,7 @@ nvm_try_profile() {
 #
 nvm_detect_profile() {
   if [ "${PROFILE-}" = '/dev/null' ]; then
-    # the user has specifically requested NOT to have nvm touch their profile
+    # the users has specifically requested NOT to have nvm touch their profile
     return
   fi
 
@@ -258,7 +258,7 @@ nvm_detect_profile() {
 }
 
 #
-# Check whether the user has any globally-installed npm modules in their system
+# Check whether the users has any globally-installed npm modules in their system
 # Node, and warn them if so.
 #
 nvm_check_global_modules() {

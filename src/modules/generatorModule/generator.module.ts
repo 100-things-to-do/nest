@@ -14,6 +14,7 @@ import { AchievementService } from './services/achievement.service';
 
 import { AchievementController } from './controllers/achievement.controller';
 import { Helper } from './helpers/helper';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Helper } from './helpers/helper';
     }),
     MongooseModule.forRoot(process.env.DATABASE_URI),
     MongooseModule.forFeature([{ name: Topic.name, schema: TopicSchema }]),
+    UsersModule,
   ],
   controllers: [
     TopicController,
