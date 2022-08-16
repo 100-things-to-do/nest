@@ -12,16 +12,16 @@ export class UsersService {
     private readonly activityService: ActivityService,
   ) {}
 
-  async createNewDeviceRecord(userDeviceId: string) {
+  async createNewDeviceRecord(deviceId: string) {
     const result = await this.userModel
-      .findOne({ userDeviceId: userDeviceId })
+      .findOne({ userDeviceId: deviceId })
       .exec();
 
     if (result) {
       return;
     } else {
       const user: User = {
-        userDeviceId: userDeviceId,
+        userDeviceId: deviceId,
       };
       const newUser = new this.userModel(user);
       return newUser.save();

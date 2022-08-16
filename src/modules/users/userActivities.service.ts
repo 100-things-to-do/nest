@@ -50,13 +50,16 @@ export class UserActivitiesService {
       topicId,
       categoryId,
     );
+    console.log('revealedActivities', revealedActivities);
     for (const activity of activities) {
       const isActivityRevealed =
         revealedActivities.filter(
-          (revealedActivity) => revealedActivity._id == activity._id,
+          (revealedActivity: string) =>
+            revealedActivity == String(activity._id),
         ).length == 1;
       if (isActivityRevealed) {
         activity.isRevealed = true;
+        console.log(activity);
       }
     }
     return activities;

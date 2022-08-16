@@ -8,13 +8,10 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
-  @Post('/:userDeviceId')
-  async createNewDeviceRecord(@Param('userDeviceId') userDeviceId: string) {
-    return this.userService.createNewDeviceRecord(userDeviceId);
+  @Post('/:deviceId')
+  async createNewDeviceRecord(@Param('deviceId') deviceId: string) {
+    return this.userService.createNewDeviceRecord(deviceId);
   }
-
-  @Get()
-  async getAchievements() {}
 
   //TODO: delete below after manuel testing.
   @Get()

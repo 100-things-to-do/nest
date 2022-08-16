@@ -18,7 +18,7 @@ export class Activity {
   @Prop({ type: AchievementSchema })
   achievement: Achievement;
 
-  @Prop({ default: false })
+  @Prop()
   isRevealed: boolean;
 }
 
