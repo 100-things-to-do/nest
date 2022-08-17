@@ -6,6 +6,7 @@ import {
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { Achievement } from '../../../schemas/achievement.schema';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class AchievementsService {
@@ -20,7 +21,6 @@ export class AchievementsService {
       await this.initAchievementsDocument();
       achievementDoc = await this.achievementsModel.findOne({});
     }
-    console.log(achievementDoc);
     return achievementDoc;
   }
 
@@ -30,7 +30,17 @@ export class AchievementsService {
     const update = {
       $push: { achievements: achievement },
     };
-    await this.achievementsModel.findOneAndUpdate(query, update);
+    const options = {
+      new: true,
+    };
+    const result = await this.achievementsModel.findOneAndUpdate(
+      query,
+      update,
+      options,
+    );
+    const achievementId =
+      result.achievements[result.achievements.length - 1]._id;
+    return achievementId;
   }
 
   async initAchievementsDocument() {

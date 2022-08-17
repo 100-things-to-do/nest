@@ -31,12 +31,14 @@ export class AchievementService {
     activityId,
     achievementDto: Achievement,
   ): Promise<Topic> {
-    await this.achievementsService.addAchievement(achievementDto);
+    const achievementId = await this.achievementsService.addAchievement(
+      achievementDto,
+    );
     return this.topicModel.findOneAndUpdate(
       { _id: topicId },
       {
         $set: {
-          'categories.$[i].activities.$[j].achievement': achievementDto._id,
+          'categories.$[i].activities.$[j].achievement': achievementId,
         },
       },
       {
