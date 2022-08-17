@@ -3,6 +3,7 @@ import { User, UserDocument } from './schemas/user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ActivityService } from '../generatorModule/services/activity.service';
+import { AchievementService } from '../generatorModule/services/achievement.service';
 
 @Injectable()
 export class UserActivitiesService {
@@ -10,6 +11,7 @@ export class UserActivitiesService {
     @InjectModel(User.name)
     private userModel: Model<UserDocument>,
     private readonly activityService: ActivityService,
+    private readonly achievementService: AchievementService,
   ) {}
 
   async revealActivity(

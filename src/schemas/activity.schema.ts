@@ -15,8 +15,8 @@ export class Activity {
   @Prop()
   image: string;
 
-  @Prop({ type: AchievementSchema })
-  achievement: Achievement;
+  @Prop()
+  achievement: ObjectId;
 
   @Prop()
   isRevealed: boolean;

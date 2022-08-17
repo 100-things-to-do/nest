@@ -14,9 +14,9 @@ import { Achievement } from '../../../schemas/achievement.schema';
 import { AchievementService } from '../services/achievement.service';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('achievements')
+@ApiTags('achievement')
 @Controller(
-  'topics/:topicId/categories/:categoryId/activities/:activityId/achievements',
+  'topics/:topicId/categories/:categoryId/activities/:activityId/achievement',
 )
 export class AchievementController {
   constructor(private readonly achievementService: AchievementService) {}

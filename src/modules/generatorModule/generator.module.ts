@@ -15,6 +15,12 @@ import { AchievementService } from './services/achievement.service';
 import { AchievementController } from './controllers/achievement.controller';
 import { Helper } from './helpers/helper';
 import { UsersModule } from '../users/users.module';
+import {
+  Achievements,
+  AchievementsSchema,
+} from '../../schemas/achievements.schema';
+import { AchievementsService } from './services/achievements.service';
+import { AchievementsController } from './controllers/achievements.controller';
 
 @Module({
   imports: [
@@ -24,20 +30,25 @@ import { UsersModule } from '../users/users.module';
     }),
     MongooseModule.forRoot(process.env.DATABASE_URI),
     MongooseModule.forFeature([{ name: Topic.name, schema: TopicSchema }]),
+    MongooseModule.forFeature([
+      { name: Achievements.name, schema: AchievementsSchema },
+    ]),
   ],
   controllers: [
     TopicController,
     CategoryController,
     ActivityController,
     AchievementController,
+    AchievementsController,
   ],
   providers: [
     TopicService,
     CategoryService,
     ActivityService,
     AchievementService,
+    AchievementsService,
     Helper,
   ],
-  exports: [ActivityService],
+  exports: [ActivityService, AchievementService],
 })
 export class GeneratorModule {}
