@@ -7,6 +7,7 @@ import { User, UserSchema } from './schemas/user.schema';
 import { GeneratorModule } from '../generatorModule/generator.module';
 import { UserActivitiesController } from './userActivities.controller';
 import { UserActivitiesService } from './userActivities.service';
+import { UserActivitiesMapper } from './userActivities.mapper';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { UserActivitiesService } from './userActivities.service';
     GeneratorModule,
   ],
   controllers: [UsersController, UserActivitiesController],
-  providers: [UsersService, UserActivitiesService],
+  providers: [UsersService, UserActivitiesService, UserActivitiesMapper],
 })
 export class UsersModule {}

@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ActivityService } from '../generatorModule/services/activity.service';
 import { AchievementService } from '../generatorModule/services/achievement.service';
+import { UserActivitiesMapper } from './userActivities.mapper';
 
 @Injectable()
 export class UserActivitiesService {
@@ -12,6 +13,7 @@ export class UserActivitiesService {
     private userModel: Model<UserDocument>,
     private readonly activityService: ActivityService,
     private readonly achievementService: AchievementService,
+    private readonly userActivitiesMapper: UserActivitiesMapper,
   ) {}
 
   async revealActivity(
@@ -34,11 +36,19 @@ export class UserActivitiesService {
       await this.createTopicWithId(userDeviceId, topicId);
       await this.createCategoryWithId(userDeviceId, topicId, categoryId);
     }
+
+    const activity = await this.activityService.getActivity(
+      topicId,
+      categoryId,
+      activityId,
+    );
+    const achievementId = String(activity.achievement);
     const result = this.revealActivityDb(
       userDeviceId,
       topicId,
       categoryId,
       activityId,
+      achievementId,
     );
   }
 
@@ -52,6 +62,8 @@ export class UserActivitiesService {
       topicId,
       categoryId,
     );
+    let totalAchievements = 0;
+    let achievedAchievements = 0;
     console.log('revealedActivities', revealedActivities);
     for (const activity of activities) {
       const isActivityRevealed =
@@ -61,10 +73,19 @@ export class UserActivitiesService {
         ).length == 1;
       if (isActivityRevealed) {
         activity.isRevealed = true;
-        console.log(activity);
+        if (activity.achievement) {
+          achievedAchievements += 1;
+        }
+      }
+      if (activity.achievement) {
+        totalAchievements += 1;
       }
     }
-    return activities;
+    return this.userActivitiesMapper.mapToUserActivities(
+      activities,
+      totalAchievements,
+      achievedAchievements,
+    );
   }
 
   async getRevealedActivities(
@@ -158,15 +179,20 @@ export class UserActivitiesService {
     topicId: string,
     categoryId: string,
     activityId: string,
+    achievementId: string,
   ) {
+    const pushObject = { 'topics.$[i].categories.$[j].activities': activityId };
+    if (achievementId) {
+      pushObject['topics.$[i].categories.$[j].achievements'] = achievementId;
+    }
+    console.log(pushObject);
+
     const result = await this.userModel.updateOne(
       {
         userDeviceId: userDeviceId,
       },
       {
-        $push: {
-          'topics.$[i].categories.$[j].activities': activityId,
-        },
+        $push: pushObject,
       },
       {
         arrayFilters: [{ 'i._id': topicId }, { 'j._id': categoryId }],
