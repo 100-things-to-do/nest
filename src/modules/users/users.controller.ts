@@ -1,7 +1,16 @@
 import { UsersService } from './users.service';
-import { Controller, Delete, Get, Param, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { response } from 'express';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UserDto } from './models/dtos/UserDto';
 
 @ApiTags('users')
 @Controller('users')
@@ -9,7 +18,11 @@ export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post('/:deviceId')
-  async createNewDeviceRecord(@Param('deviceId') deviceId: string) {
+  @ApiOperation({ summary: 'Creates new device record' })
+  async createNewDeviceRecord(
+    @Param('deviceId') deviceId: string,
+    @Body() userDto: UserDto,
+  ) {
     return this.userService.createNewDeviceRecord(deviceId);
   }
 

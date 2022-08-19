@@ -8,11 +8,16 @@ import {
   Post,
   Put,
   Res,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { Activity } from '../../../schemas/activity.schema';
 import { Achievement } from '../../../schemas/achievement.schema';
 import { AchievementService } from '../services/achievement.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import AchievementDto from '../../../dtos/AchievementDto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { multerOptions } from '../../../config/multer';
 
 @ApiTags('achievement')
 @Controller(
@@ -22,54 +27,22 @@ export class AchievementController {
   constructor(private readonly achievementService: AchievementService) {}
 
   @Post()
+  @ApiOperation({ summary: 'creates achievement, topic doc keeps ref of it' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FilesInterceptor('image', null, multerOptions))
   async createAchievement(
-    @Body() achievementDto: Achievement,
+    @Body() achievementDto: AchievementDto,
     @Param('topicId') topicId: string,
     @Param('categoryId') categoryId: string,
     @Param('activityId') activityId: string,
+    @UploadedFiles() image,
   ) {
     return this.achievementService.addAchievementToActivity(
       topicId,
       categoryId,
       activityId,
       achievementDto,
+      image,
     );
-  }
-
-  @Get()
-  async getAchievement(
-    @Param('topicId') topicId: string,
-    @Param('categoryId') categoryId: string,
-    @Param('activityId') activityId: string,
-  ) {
-    return this.achievementService.getAchievement(
-      topicId,
-      categoryId,
-      activityId,
-    );
-  }
-
-  @Put()
-  async update(
-    @Param('topicId') topicId: string,
-    @Param('categoryId') categoryId: string,
-    @Param('activityId') activityId: string,
-    @Body() achievement: Achievement,
-  ) {
-    return this.achievementService.update(
-      topicId,
-      categoryId,
-      activityId,
-      achievement,
-    );
-  }
-
-  @Delete()
-  async delete(
-    @Param('topicId') topicId: string,
-    @Param('categoryId') categoryId: string,
-    @Param('activityId') activityId: string,
-  ) {
-    return this.achievementService.delete(topicId, categoryId, activityId);
   }
 }

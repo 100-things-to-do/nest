@@ -23,7 +23,6 @@ export class AchievementsService {
   async addAchievement(achievement: Achievement) {
     const newAchievement = new this.achievementModel(achievement);
     const result = await newAchievement.save();
-    console.log('resulttt', result._id);
     return result._id;
   }
 }

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { TopicService } from 'src/modules/generatorModule/services/topic.service';
 import { Topic } from '../../../schemas/topic.schema';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import TopicDto from '../../../dtos/TopicDto';
 
 @ApiTags('topics')
