@@ -20,8 +20,6 @@ export class AchievementService {
   constructor(
     @InjectModel(Topic.name)
     private topicModel: Model<TopicDocument>,
-    @InjectModel(Achievements.name)
-    private achievementsModel: Model<AchievementsDocument>,
     private readonly achievementsService: AchievementsService,
   ) {}
 

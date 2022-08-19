@@ -21,6 +21,10 @@ import {
 } from '../../schemas/achievements.schema';
 import { AchievementsService } from './services/achievements.service';
 import { AchievementsController } from './controllers/achievements.controller';
+import {
+  Achievement,
+  AchievementSchema,
+} from '../../schemas/achievement.schema';
 
 @Module({
   imports: [
@@ -31,7 +35,7 @@ import { AchievementsController } from './controllers/achievements.controller';
     MongooseModule.forRoot(process.env.DATABASE_URI),
     MongooseModule.forFeature([{ name: Topic.name, schema: TopicSchema }]),
     MongooseModule.forFeature([
-      { name: Achievements.name, schema: AchievementsSchema },
+      { name: Achievement.name, schema: AchievementSchema },
     ]),
   ],
   controllers: [

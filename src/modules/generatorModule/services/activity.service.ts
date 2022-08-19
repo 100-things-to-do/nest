@@ -19,7 +19,19 @@ export class ActivityService {
   ) {}
 
   async getActivities(topicId, categoryId): Promise<Activity[]> {
-    const topic: Topic = await this.topicModel.findOne({ _id: topicId }).exec();
+    const topic: Topic = await this.topicModel
+      .findOne({ _id: topicId })
+      .populate({
+        path: 'categories',
+        populate: {
+          path: 'activities',
+          populate: {
+            path: 'achievement',
+            model: 'Achievement',
+          },
+        },
+      })
+      .exec();
     if (!topic) {
       return <Activity[]>[];
     }

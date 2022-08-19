@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Schema as MongooseSchema } from 'mongoose';
 import { AchievementSchema, Achievement } from './achievement.schema';
 import ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -15,7 +15,7 @@ export class Activity {
   @Prop()
   image: string;
 
-  @Prop()
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Achievement' })
   achievement: ObjectId;
 
   @Prop()
