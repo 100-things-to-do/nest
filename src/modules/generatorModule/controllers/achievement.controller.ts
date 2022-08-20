@@ -1,21 +1,14 @@
 import {
   Body,
   Controller,
-  Delete,
-  Get,
-  HttpStatus,
   Param,
   Post,
-  Put,
-  Res,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { Activity } from '../../../schemas/activity.schema';
-import { Achievement } from '../../../schemas/achievement.schema';
 import { AchievementService } from '../services/achievement.service';
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import AchievementDto from '../../../dtos/AchievementDto';
+import AchievementDto from '../models/dtos/AchievementDto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from '../../../config/multer';
 

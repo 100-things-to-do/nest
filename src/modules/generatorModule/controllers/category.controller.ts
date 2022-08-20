@@ -12,11 +12,11 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { CategoryService } from '../services/category.service';
-import { Category } from '../../../schemas/category.schema';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
-import CategoryDto from '../../../dtos/CategoryDto';
+import CategoryDto from '../models/dtos/CategoryDto';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from '../../../config/multer';
+import { Category } from '../schemas/category.schema';
 
 @ApiTags('categories')
 @Controller('topics/:topicId/categories')

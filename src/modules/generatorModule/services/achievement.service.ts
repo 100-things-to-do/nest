@@ -1,19 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
-import { Activity } from '../../../schemas/activity.schema';
-import { Topic, TopicDocument } from '../../../schemas/topic.schema';
-import { Category } from '../../../schemas/category.schema';
 import {
   Achievement,
   AchievementDocument,
-} from '../../../schemas/achievement.schema';
-import {
-  Achievements,
-  AchievementsDocument,
-} from '../../../schemas/achievements.schema';
-import ObjectId = mongoose.Schema.Types.ObjectId;
-import { AchievementsService } from './achievements.service';
+} from '../../achievements/schemas/achievement.schema';
+import { AchievementsService } from '../../achievements/achievements.service';
+import { Topic, TopicDocument } from '../schemas/topic.schema';
 
 @Injectable()
 export class AchievementService {

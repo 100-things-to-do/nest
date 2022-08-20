@@ -11,14 +11,12 @@ import {
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { CategoryService } from '../services/category.service';
-import { Category } from '../../../schemas/category.schema';
-import { Activity } from '../../../schemas/activity.schema';
 import { ActivityService } from '../services/activity.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
-import ActivityDto from '../../../dtos/ActivityDto';
+import ActivityDto from '../models/dtos/ActivityDto';
 import { multerOptions } from '../../../config/multer';
+import { Activity } from '../schemas/activity.schema';
 
 @ApiTags('activities')
 @Controller('topics/:topicId/categories/:categoryId/activities')

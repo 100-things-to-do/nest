@@ -8,6 +8,7 @@ import { GeneratorModule } from '../generatorModule/generator.module';
 import { UserActivitiesController } from './userActivities.controller';
 import { UserActivitiesService } from './userActivities.service';
 import { UserActivitiesMapper } from './userActivities.mapper';
+import { AchievementsModule } from '../achievements/achievements.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserActivitiesMapper } from './userActivities.mapper';
     MongooseModule.forRoot(process.env.DATABASE_URI),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     GeneratorModule,
+    AchievementsModule,
   ],
   controllers: [UsersController, UserActivitiesController],
   providers: [UsersService, UserActivitiesService, UserActivitiesMapper],

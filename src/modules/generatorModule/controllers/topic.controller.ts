@@ -10,9 +10,9 @@ import {
   Res,
 } from '@nestjs/common';
 import { TopicService } from 'src/modules/generatorModule/services/topic.service';
-import { Topic } from '../../../schemas/topic.schema';
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
-import TopicDto from '../../../dtos/TopicDto';
+import TopicDto from '../models/dtos/TopicDto';
+import { Topic } from '../schemas/topic.schema';
 
 @ApiTags('topics')
 @Controller('topics')

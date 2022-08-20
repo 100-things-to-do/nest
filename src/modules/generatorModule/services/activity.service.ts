@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Document, Model } from 'mongoose';
-import { Activity } from '../../../schemas/activity.schema';
-import { Topic, TopicDocument } from '../../../schemas/topic.schema';
-import { Category } from '../../../schemas/category.schema';
-import { AchievementService } from './achievement.service';
 import { Helper } from '../helpers/helper';
-import ActivityDto from '../../../dtos/ActivityDto';
-import { Express } from 'express';
-import { Achievement } from '../../../schemas/achievement.schema';
+import ActivityDto from '../models/dtos/ActivityDto';
+import { Achievement } from '../../achievements/schemas/achievement.schema';
+import { Activity } from '../schemas/activity.schema';
+import { Topic, TopicDocument } from '../schemas/topic.schema';
+import { Category } from '../schemas/category.schema';
 
 @Injectable()
 export class ActivityService {

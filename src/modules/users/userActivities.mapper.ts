@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Activity } from '../../schemas/activity.schema';
+import { Activity } from '../generatorModule/schemas/activity.schema';
 
 @Injectable()
 export class UserActivitiesMapper {

@@ -2,7 +2,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { AchievementService } from '../generatorModule/services/achievement.service';
-import { AchievementsService } from '../generatorModule/services/achievements.service';
+import { AchievementsService } from '../achievements/achievements.service';
 
 export class UserAchievementsService {
   constructor(

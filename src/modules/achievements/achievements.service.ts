@@ -1,10 +1,7 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import {
-  Achievement,
-  AchievementDocument,
-} from '../../../schemas/achievement.schema';
+import { Achievement, AchievementDocument } from './schemas/achievement.schema';
 import mongoose from 'mongoose';
 
 @Injectable()

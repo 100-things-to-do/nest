@@ -1,4 +1,4 @@
-import { Activity } from '../../../../schemas/activity.schema';
+import { Activity } from '../../../generatorModule/schemas/activity.schema';
 
 export class UserActivitiesResponseDto {
   achievedAchievements: number;
