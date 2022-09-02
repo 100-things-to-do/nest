@@ -394,5 +394,6 @@ Temporary Items
 
 =======
 # Local
-dev.env
 dist
+postgres-data
+uploads
